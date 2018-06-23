@@ -1,0 +1,48 @@
+<resources>
+    <string name="app_name">Helping Hand Bangladesh</string>
+    <string name="view_list">View List</string>
+    <string name="rating_app">Rating APP</string>
+    <string name="about">About</string>
+    <string name="share">Share</string>
+    <string name="blood_group">Blood Group</string>
+    <string name="female">Female</string>
+    <string name="male">Male</string>
+    <string name="gender">Gender</string>
+    <string name="occupation_institution">Occupation / Institution</string>
+    <string name="division">Division</string>
+    <string name="sync">Sync</string>
+    <string name="regularity">Are You Regular Donner?</string>
+    <string name="regular">Regular</string>
+    <string name="occasional">Occasional</string>
+
+    <string-array name="bld_grp_array">
+        <item>A +ve</item>
+        <item>A -ve</item>
+        <item>B +ve</item>
+        <item>B -ve</item>
+        <item>O +ve</item>
+        <item>O -ve</item>
+        <item>AB +ve</item>
+        <item>AB -ve</item>
+    </string-array>
+
+    <string-array name="division_array">
+        <item>Dhaka</item>
+        <item>Rajshahi</item>
+        <item>Rangpur</item>
+        <item>Sylhet</item>
+        <item>Khulna</item>
+        <item>Barishal</item>
+        <item>Chottogram</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="occupation_array">
+        <item>Student</item>
+        <item>Job Holder</item>
+        <item>Business Man</item>
+        <item>House-wife</item>
+        <item>Unemployed</item>
+        <item>Other</item>
+    </string-array>
+</resources>

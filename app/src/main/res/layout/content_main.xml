@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/backgrond"
+    android:layout_margin="8dp"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.droidsoftbd.hhbregistration.MainActivity"
+    tools:showIn="@layout/activity_main">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="#1B5E20"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:paddingTop="5dp"
+        android:paddingBottom="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Welcome to Helping Hand Bangladesh!!" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/round_input"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp"
+                android:padding="4dp">
+
+                <EditText
+                    android:id="@+id/full_name_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Full Name"
+                    android:inputType="text"
+                    android:padding="8dp" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/round_input"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp"
+                android:padding="4dp">
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginTop="4dp"
+                    android:hint="@string/gender"
+                    android:padding="8dp"
+                    android:textSize="17sp" />
+
+                <RadioGroup
+                    android:id="@+id/radioSex"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/five_padding"
+                    android:background="#86e2f9e8"
+                    android:padding="5dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/radioMale"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:checked="true"
+                            android:hint="@string/male"
+                            android:onClick="radioGroup"
+                            android:textSize="15sp" />
+
+                        <RadioButton
+                            android:id="@+id/radioFemale"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:hint="@string/female"
+                            android:onClick="radioGroup"
+                            android:textSize="15sp" />
+
+                    </LinearLayout>
+
+                </RadioGroup>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/round_input"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp"
+                android:padding="4dp">
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginTop="4dp"
+                    android:hint="@string/regularity"
+                    android:padding="8dp"
+                    android:textSize="17sp" />
+
+                <RadioGroup
+                    android:id="@+id/radioRegularity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/five_padding"
+                    android:background="#86e2f9e8"
+                    android:padding="5dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/radioRegular"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:checked="true"
+                            android:hint="@string/regular"
+                            android:onClick="radioRegularity"
+                            android:textSize="15sp" />
+
+                        <RadioButton
+                            android:id="@+id/radioOccasional"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:hint="@string/occasional"
+                            android:onClick="radioRegularity"
+                            android:textSize="15sp" />
+
+                    </LinearLayout>
+
+                </RadioGroup>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/round_input"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp"
+                android:padding="@dimen/input_field_padding">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:hint="@string/blood_group"
+                    android:padding="8dp"
+                    android:textSize="18sp" />
+
+                <Spinner
+                    android:id="@+id/blood_group_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/round_input"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp"
+                android:padding="8dp">
+
+                <EditText
+                    android:id="@+id/age_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Age"
+                    android:inputType="numberDecimal"
+                    android:padding="8dp" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/round_input"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp"
+                android:padding="8dp">
+
+                <EditText
+                    android:id="@+id/mobile_number_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Mobile Number"
+                    android:inputType="numberDecimal"
+                    android:padding="8dp" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/round_input"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp"
+                android:padding="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="datePicker"
+                    android:orientation="horizontal">
+                    <EditText
+
+                        android:id="@+id/last_date_donate"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:onClick="datePicker"
+                        android:hint="Last Blood Donate Date"
+                        android:inputType="text"
+                        android:padding="8dp" />
+                    <ImageView
+                        android:background="@color/colorPrimaryDark"
+                        android:layout_margin="@dimen/five_padding"
+                        android:padding="5dp"
+                        android:layout_weight=".25"
+                        android:layout_width="0dp"
+                        android:onClick="datePicker"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_calender_24dp"/>
+
+                </LinearLayout>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/round_input"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp"
+                android:padding="@dimen/input_field_padding">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/division"
+                    android:padding="8dp"
+                    android:textSize="18sp" />
+
+                <Spinner
+                    android:id="@+id/division_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/other_division_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/round_input"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp"
+                android:padding="4dp">
+
+                <EditText
+                    android:id="@+id/other_division_ET"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Other Division"
+                    android:inputType="text"
+                    android:padding="8dp" />
+
+            </android.support.design.widget.TextInputLayout>
+
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/round_input"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp"
+                android:padding="@dimen/input_field_padding">
+
+                <TextView
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/occupation_institution"
+                    android:padding="8dp"
+                    android:textSize="18sp" />
+
+                <Spinner
+                    android:id="@+id/occupation_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/other_occupation_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/round_input"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp"
+                android:padding="4dp">
+
+                <EditText
+                    android:id="@+id/other_occupation_ET"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Other Occupation / Institution"
+                    android:inputType="text"
+                    android:padding="8dp" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/round_input"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp"
+                android:padding="4dp">
+
+                <EditText
+                    android:id="@+id/father_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Father's Name"
+                    android:inputType="text"
+                    android:padding="8dp" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <!--<android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp"
+                android:padding="4dp">
+
+                <EditText
+                    android:id="@+id/mother_name"
+                    android:padding="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Mother's Name"
+                    android:inputType="text"/>
+
+            </android.support.design.widget.TextInputLayout>-->
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/round_input"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp"
+                android:padding="4dp">
+
+                <EditText
+                    android:id="@+id/present_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Present Address"
+                    android:inputType="text"
+                    android:padding="8dp" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/round_input"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp"
+                android:padding="4dp">
+
+                <EditText
+                    android:id="@+id/permanent_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Permanent Address"
+                    android:inputType="text"
+                    android:padding="8dp" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:background="@drawable/round_input"
+                android:layout_marginTop="4dp"
+                android:padding="4dp">
+
+                <EditText
+                    android:id="@+id/email_fb"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Email / Facebook ID"
+                    android:inputType="text"
+                    android:padding="8dp" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:id="@+id/submit_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/white"
+                android:padding="8dp"
+                android:text="Submit"
+                android:background="@drawable/round_button"
+                android:onClick="submitForm"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+    </ScrollView>
+
+    <com.google.android.gms.ads.AdView
+
+        android:id="@+id/bannerAdView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>
