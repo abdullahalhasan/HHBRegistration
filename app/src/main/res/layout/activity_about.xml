@@ -8,7 +8,7 @@
     tools:context="com.droidsoftbd.hhbregistration.AboutActivity">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/droidsoftTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -44,7 +44,7 @@
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/textView"
+        android:layout_above="@+id/droidsoftTextView"
         android:layout_marginBottom="27dp"
         android:layout_marginEnd="23dp"
         android:textAllCaps="false"

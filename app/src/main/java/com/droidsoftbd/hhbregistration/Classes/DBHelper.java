@@ -18,6 +18,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String ID_COLUMN  = "id";
     public static final String NAME_COLUMN = "name";
     public static final String GENDER_COLUMN = "gender";
+    public static final String REGULARITY_COLUMN = "regularity";
     public static final String BLOOD_GROUP_COLUMN = "blood_group";
     public static final String AGE_COLUMN = "age";
     public static final String MOBILE_COLUMN = "mobile";
@@ -28,7 +29,6 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String PRESENT_ADD_COLUMN = "present_address";
     public static final String PERMANENT_ADD_COLUMN = "permanent_address";
     public static final String EMAIL_FB_COLUMN = "email_fb_id";
-    public static final String REGULARITY_COLUMN = "regularity";
     public static final String STATUS_COLUMN = "status";
     public static final String TABLE_INFO = "info_tbl";
 
@@ -36,6 +36,7 @@ public class DBHelper extends SQLiteOpenHelper {
             +ID_COLUMN+" INTEGER PRIMARY KEY,"
             +NAME_COLUMN+" TEXT,"
             +GENDER_COLUMN+" TEXT,"
+            +REGULARITY_COLUMN+" TEXT,"
             +BLOOD_GROUP_COLUMN+" TEXT,"
             +AGE_COLUMN+" TEXT, "
             +MOBILE_COLUMN+" TEXT,"
@@ -46,7 +47,6 @@ public class DBHelper extends SQLiteOpenHelper {
             +PRESENT_ADD_COLUMN+" TEXT,"
             +PERMANENT_ADD_COLUMN+" TEXT,"
             +EMAIL_FB_COLUMN+" TEXT,"
-            +REGULARITY_COLUMN+" TEXT,"
             +STATUS_COLUMN+" TEXT)";
 
 

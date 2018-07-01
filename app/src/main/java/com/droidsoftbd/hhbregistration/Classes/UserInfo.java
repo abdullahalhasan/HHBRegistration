@@ -21,11 +21,13 @@ public class UserInfo {
     private String regularity;
     private String status;
 
-    public UserInfo(String fullName, String gender, String bloodGroup, String age, String mobileNumber,
+    //Constructor for local List show
+    public UserInfo(String fullName, String gender, String regularity, String bloodGroup, String age, String mobileNumber,
                     String lastBloodDonateDate, String division, String occupation, String fatherName,
-                    String presentAddress, String permanentAddress, String emailFbID,String regularity,String status) {
+                    String presentAddress, String permanentAddress, String emailFbID,String status) {
         this.fullName = fullName;
         this.gender = gender;
+        this.regularity = regularity;
         this.bloodGroup = bloodGroup;
         this.age = age;
         this.mobileNumber = mobileNumber;
@@ -36,16 +38,35 @@ public class UserInfo {
         this.presentAddress = presentAddress;
         this.permanentAddress = permanentAddress;
         this.emailFbID = emailFbID;
-        this.regularity = regularity;
         this.status = status;
     }
-
-    public UserInfo(int id, String fullName, String gender, String bloodGroup, String age, String mobileNumber,
+    //Constructor for UnSynced Information
+    public UserInfo(String fullName, String gender, String regularity, String bloodGroup, String age, String mobileNumber,
                     String lastBloodDonateDate, String division, String occupation, String fatherName,
-                    String presentAddress, String permanentAddress, String emailFbID, String regularity, String status) {
+                    String presentAddress) {
+        this.fullName = fullName;
+        this.gender = gender;
+        this.regularity = regularity;
+        this.bloodGroup = bloodGroup;
+        this.age = age;
+        this.mobileNumber = mobileNumber;
+        this.lastBloodDonateDate = lastBloodDonateDate;
+        this.division = division;
+        this.occupation = occupation;
+        this.fatherName = fatherName;
+        this.presentAddress = presentAddress;
+        this.permanentAddress = permanentAddress;
+        this.emailFbID = emailFbID;
+
+    }
+
+    public UserInfo(int id, String fullName, String gender, String regularity, String bloodGroup, String age, String mobileNumber,
+                    String lastBloodDonateDate, String division, String occupation, String fatherName,
+                    String presentAddress, String permanentAddress, String emailFbID, String status) {
         this.id = id;
         this.fullName = fullName;
         this.gender = gender;
+        this.regularity = regularity;
         this.bloodGroup = bloodGroup;
         this.age = age;
         this.mobileNumber = mobileNumber;
@@ -56,7 +77,6 @@ public class UserInfo {
         this.presentAddress = presentAddress;
         this.permanentAddress = permanentAddress;
         this.emailFbID = emailFbID;
-        this.regularity = regularity;
         this.status = status;
     }
 

@@ -24,6 +24,17 @@
         android:layout_marginBottom="8dp"
         android:text="Welcome to Helping Hand Bangladesh!!" />
 
+    <com.google.android.gms.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/bannerAdView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/five_padding"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/banner_ad_id" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -451,10 +462,4 @@
 
         </LinearLayout>
     </ScrollView>
-
-    <com.google.android.gms.ads.AdView
-
-        android:id="@+id/bannerAdView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
 </LinearLayout>

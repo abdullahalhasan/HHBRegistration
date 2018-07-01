@@ -61,12 +61,12 @@
             android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/last_donate_date_lv"
+            android:id="@+id/status_tv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="left"
-            android:text="Last Donate Date"
+            android:text="Status"
             android:textSize="14sp" />
     </LinearLayout>
 

@@ -1,7 +1,6 @@
 package com.droidsoftbd.hhbregistration.Classes;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +33,7 @@ public class UserAdapter extends ArrayAdapter {
         TextView bloodgroupTV;
         TextView divisionTV;
         TextView mobileTV;
-        TextView lastDonateDateTV;
+        TextView status_tv;
     }
 
     @Override
@@ -50,7 +49,7 @@ public class UserAdapter extends ArrayAdapter {
             viewHolder.bloodgroupTV = (TextView) convertView.findViewById(R.id.blood_group_lv);
             viewHolder.divisionTV = (TextView) convertView.findViewById(R.id.division_lv);
             viewHolder.mobileTV = (TextView) convertView.findViewById(R.id.mobile_lv);
-            viewHolder.lastDonateDateTV = (TextView) convertView.findViewById(R.id.last_donate_date_lv);
+            viewHolder.status_tv = (TextView) convertView.findViewById(R.id.status_tv);
 
             convertView.setTag(viewHolder);
         } else {
@@ -63,7 +62,7 @@ public class UserAdapter extends ArrayAdapter {
             viewHolder.bloodgroupTV.setText("Blood Group: "+userList.get(position).getBloodGroup());
             viewHolder.divisionTV.setText("Division: "+userList.get(position).getDivision());
             viewHolder.mobileTV.setText("Mobile: "+userList.get(position).getMobileNumber());
-            viewHolder.lastDonateDateTV.setText("Last Donate: "+userList.get(position).getLastBloodDonateDate());
+            viewHolder.status_tv.setText("Status: "+userList.get(position).getStatus());
         } else {
             Toast.makeText(context, "Empty User List!!", Toast.LENGTH_LONG).show();
         }

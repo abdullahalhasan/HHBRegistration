@@ -1,9 +1,13 @@
 package com.droidsoftbd.hhbregistration;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.Cursor;
 import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.DialogFragment;
@@ -21,22 +25,24 @@ import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.droidsoftbd.hhbregistration.Classes.DBManager;
 import com.droidsoftbd.hhbregistration.Classes.DatePickerFragment;
 import com.droidsoftbd.hhbregistration.Classes.NetworkStateChecker;
 import com.droidsoftbd.hhbregistration.Classes.UserInfo;
-import com.droidsoftbd.hhbregistration.Classes.VolleySingleton;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -85,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private String syncStatusNo = "no";
 
     private ProgressDialog progressDialog;
-
+    AdView bannerAd;
 
 
 
@@ -97,8 +103,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        registerReceiver(new NetworkStateChecker(), new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
-
+        //registerReceiver(new NetworkStateChecker(), new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+        bannerAd = findViewById(R.id.bannerAdView);
+        if (isOnline()) {
+            AdRequest adRequest = new AdRequest.Builder().build();
+            bannerAd.loadAd(adRequest);
+        } else {
+            bannerAd.setVisibility(View.INVISIBLE);
+        }
 
         init();
         maleButton.setChecked(true);
@@ -174,20 +186,42 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 startActivity(new Intent(this,UserListActivity.class));
                 break;
             case R.id.rating_app_menu:
-                //startActivity(new Intent(this,UserListActivity.class));
-                Toast.makeText(this, "Rating App Clicked", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                intent.setData(Uri.parse("https://play.google.com/store/apps/details?id=com.droidsoftbd.hhbregistration"));
+                startActivity(intent);
+                //Toast.makeText(this, "Rating App Clicked", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.share_menu_menu:
-                //startActivity(new Intent(this,UserListActivity.class));
-                Toast.makeText(this, "Share Menu Clicked", Toast.LENGTH_SHORT).show();
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.setType("text/plain");
+                String shareBody = "https://play.google.com/store/apps/details?id=com.droidsoftbd.hhbregistration&hl=en";
+                String shareSubject = "Helping Hand Bangladesh";
+
+                shareIntent.putExtra(Intent.EXTRA_SUBJECT,shareSubject);
+                shareIntent.putExtra(Intent.EXTRA_TEXT,shareBody);
+
+                startActivity(Intent.createChooser(shareIntent,"Share Using"));
                 break;
             case R.id.about_menu:
                 startActivity(new Intent(this,AboutActivity.class));
-                Toast.makeText(this, "About Menu Clicked", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "About Menu Clicked", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.sync_menu:
-                //syncDB();
-                Toast.makeText(this, "Sync Menu Clicked", Toast.LENGTH_SHORT).show();
+
+                if (isOnline()) {
+                    int count = userManager.dbSyncCount();
+                    if(count>0) {
+                        syncDB();
+                    } else {
+                        Toast.makeText(this, "All Information is Synced", Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    Toast.makeText(this, "No Internet", Toast.LENGTH_LONG).show();
+                }
+
+
                 break;
         }/*
         int id = item.getItemId();
@@ -198,6 +232,87 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         }*/
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void syncDB() {
+        final boolean[] count = {false};
+        ArrayList<UserInfo> unSyncedUserInfos = userManager.getUnsyncedUserInfos(syncStatusNo);
+        for (UserInfo newList : unSyncedUserInfos) {
+
+            JSONObject postObject = new JSONObject();
+            RequestQueue queue =  Volley.newRequestQueue(this);
+            JSONObject userObject = new JSONObject();
+            final ProgressDialog progressDialog = new ProgressDialog(MainActivity.this);
+            progressDialog.setMessage("Uploading!!");
+            progressDialog.show();
+            String url ="http://helpinghandbd.org/app/api.php";
+            try {
+                userObject.put("name", newList.getFullName());
+                userObject.put("gender", newList.getGender());
+                userObject.put("bloodGroup", newList.getBloodGroup());
+                userObject.put("donnerType", newList.getRegularity());
+                userObject.put("age", newList.getAge());
+                userObject.put("mobileNumber", newList.getMobileNumber());
+                userObject.put("lastBloodDonateDate", newList.getLastBloodDonateDate());
+                userObject.put("division", newList.getDivision());
+                userObject.put("occupation", newList.getOccupation());
+                userObject.put("fatherName", newList.getFatherName());
+                userObject.put("presentAddress", newList.getPresentAddress());
+                userObject.put("permanentAddress", newList.getPermanentAddress());
+                userObject.put("emailFbID", newList.getEmailFbID());
+                Log.e("MainParam",userObject.toString());
+                postObject.put("user",userObject);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            Log.e("LoginActivityJsonObject",""+postObject);
+            JsonObjectRequest objRequest = new JsonObjectRequest(Request.Method.POST, url,postObject,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            progressDialog.hide();
+                            Log.e("LoginActivity","OnResponse: "+response);
+                            //Toast.makeText(MainActivity.this, "Successfully Saved To Server!!", Toast.LENGTH_LONG).show();
+                            //saveToLocalStorage(syncStatusYes);
+                            try {
+                                JSONObject newJsonObject =new JSONObject(String.valueOf(response));
+                                String responseMobileNo = newJsonObject.getString("mobileNumber");
+                                boolean updated = userManager.updateNameStatus(responseMobileNo,syncStatusYes);
+                                Log.e("responseMobileNo",""+responseMobileNo);
+                                if (updated) {
+                                    count[0] = true;
+                                } else {
+                                    Toast.makeText(MainActivity.this, "Can not Synced to Database!", Toast.LENGTH_SHORT).show();
+                                }
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    progressDialog.hide();
+                    Log.e("OnError", String.valueOf(error.getMessage()));
+                    //saveToLocalStorage(syncStatusNo);
+                }
+            });
+
+            queue.add(objRequest);
+            Log.e("UnsyncedUsers",objRequest.toString());
+        }
+        if (count[0]) {
+            Toast.makeText(this, "Sync in Completed!!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public boolean isOnline() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        return (networkInfo != null && networkInfo.isConnected());
     }
 
     public void radioGroup(View view) {
@@ -326,7 +441,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 }
                 Log.e("MainActivity","submit form");
                 setValues();
-                saveNameToServer();
+                if (isOnline()) {
+                    Toast.makeText(this, "Internet Available", Toast.LENGTH_SHORT).show();
+                    saveNameToServer();
+                } else {
+                    Toast.makeText(this, "No Internet", Toast.LENGTH_SHORT).show();
+                    saveToLocalStorage(syncStatusNo);
+                }
 
             }
         }
@@ -338,85 +459,70 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     private void saveNameToServer() {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Saving Data...");
-        progressDialog.show();
+        JSONObject postObject = new JSONObject();
+        RequestQueue queue =  Volley.newRequestQueue(this);
+        JSONObject userObject = new JSONObject();
 
-//        final String name = editTextName.getText().toString().trim();
-        Log.e("MainAtc","savetoser");
-        String URL_SAVE_NAME = "https://helpinghandbd.org/app/";
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_SAVE_NAME,
-                new Response.Listener<String>() {
+        String url ="http://helpinghandbd.org/app/api.php";
+        try {
+            userObject.put("name", fullName);
+            userObject.put("gender", gender);
+            userObject.put("bloodGroup", bloodGroup);
+            userObject.put("donnerType", donnerType);
+            userObject.put("age", age);
+            userObject.put("mobileNumber", mobileNumber);
+            userObject.put("lastBloodDonateDate", lastBloodDonateDate);
+            userObject.put("division", division);
+            userObject.put("occupation", occupation);
+            userObject.put("fatherName", fatherName);
+            userObject.put("presentAddress", presentAddress);
+            userObject.put("permanentAddress", permanentAddress);
+            userObject.put("emailFbID", emailFbID);
+            Log.e("MainParam",userObject.toString());
+            postObject.put("user",userObject);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        Log.e("LoginActivityJsonObject",""+postObject);
+        JsonObjectRequest objRequest = new JsonObjectRequest(Request.Method.POST, url,postObject,
+                new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(String response) {
+                    public void onResponse(JSONObject response) {
+                        Log.e("LoginActivity","OnResponse: "+response);
+                        Toast.makeText(MainActivity.this, "Successfully Saved To Server!!", Toast.LENGTH_LONG).show();
+                        saveToLocalStorage(syncStatusYes);
+                        try {
+                            JSONObject newJsonObject =new JSONObject(String.valueOf(response));
+                            String responseMobileNo = newJsonObject.getString("mobileNumber");
+                            Log.e("responseMobileNo",""+responseMobileNo);
 
-                        progressDialog.dismiss();
-                        Log.e("SaveToServer",response);
-//                        if (response != null && response.length() > 0) {
-                            try {
-                                JSONObject obj = new JSONObject(response);
-                                if (!obj.getBoolean("error")) {
-                                    //if there is a success
-                                    //storing the name to sqlite with status synced
-                                    Log.e("MainActivity", "On Response if not error: "+obj.toString());
-                                    saveToLocalStorage(syncStatusYes);
-                                } else {
-                                    //if there is some error
-                                    //saving the name to sqlite with status unsynced
-                                    Log.e("MainActivity", "On Response else not error: "+obj.toString());
-                                    saveToLocalStorage(syncStatusNo);
-                                }
-                            } catch (JSONException e) {
-                                Log.e("MainActivity", "" + e);
-                                e.printStackTrace();
-                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
 
-                    //}
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        progressDialog.dismiss();
-                        //on error storing the name to sqlite with status unsynced
-                        Log.e("MainActivity","vollee error - "+error);
-                        saveToLocalStorage(syncStatusNo);
+
                     }
-                }) {
+                }, new Response.ErrorListener() {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
+            public void onErrorResponse(VolleyError error) {
+                Log.e("OnError", String.valueOf(error.getMessage()));
 
-                params.put("name", fullName);
-                params.put("gender", gender);
-                params.put("bloodGroup", bloodGroup);
-                params.put("donnerType", donnerType);
-                params.put("age", age);
-                params.put("mobileNumber", mobileNumber);
-                params.put("lastBloodDonateDate", lastBloodDonateDate);
-                params.put("division", division);
-                params.put("occupation", occupation);
-                params.put("fatherName", fatherName);
-                params.put("presentAddress", presentAddress);
-                params.put("permanentAddress", permanentAddress);
-                params.put("emailFbID", emailFbID);
-                Log.e("MainParam",params.toString());
-                return params;
             }
-        };
+        });
 
-        VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
-        Log.e("MainActivity",""+stringRequest);
+        queue.add(objRequest);
     }
 
     private void saveToLocalStorage(String status) {
 
-        UserInfo newUser = new UserInfo(fullName, gender, bloodGroup, age, mobileNumber, lastBloodDonateDate, division,
-                occupation, fatherName, presentAddress, permanentAddress, emailFbID, donnerType, status);
+        UserInfo newUser = new UserInfo(fullName, gender, donnerType, bloodGroup, age, mobileNumber, lastBloodDonateDate, division,
+                occupation, fatherName, presentAddress, permanentAddress, emailFbID, status);
         Log.e("MainActivity","Save to local - "+newUser);
         boolean added = userManager.addUserInfo(newUser);
         if (added) {
-            Toast.makeText(this, "Congratulation!! Successfully Added!!!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Congratulation!! Successfully Saved to Local Server!!!", Toast.LENGTH_SHORT).show();
             clear();
         } else {
             Toast.makeText(this, "Can't Save Data", Toast.LENGTH_SHORT).show();

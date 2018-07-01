@@ -15,6 +15,10 @@
     <string name="regular">Regular</string>
     <string name="occasional">Occasional</string>
 
+    <string name="app_ad_id">ca-app-pub-5249886552515208~8554109226</string>
+    <string name="banner_ad_id">ca-app-pub-5249886552515208/1797129180</string>
+
+
     <string-array name="bld_grp_array">
         <item>A +ve</item>
         <item>A -ve</item>
@@ -34,6 +38,7 @@
         <item>Khulna</item>
         <item>Barishal</item>
         <item>Chottogram</item>
+        <item>Mymensingh</item>
         <item>Other</item>
     </string-array>
 
